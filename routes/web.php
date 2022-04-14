@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get("/users", [\App\Http\Controllers\UsersController::class, 'getList'])->middleware('auth');
+
+Route::get("/notices", [\App\Http\Controllers\NoticesController::class, 'getList'])->middleware('auth');
+Route::get("/notice_post", [\App\Http\Controllers\NoticesController::class, 'newPost'])->middleware('auth');
+Route::post("/notice_save", [\App\Http\Controllers\NoticesController::class, 'savePost'])->middleware('auth')->name('noticeUpload');
+
+Route::get("/chatlist", [\App\Http\Controllers\ChatController::class, 'getList'])->middleware('auth');
